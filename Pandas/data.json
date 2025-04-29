@@ -1,0 +1,32 @@
+[
+    {
+        "Name": "Emon",
+        "Age": 25,
+        "City": "Dhaka",
+        "Language": "Python"
+    },
+    {
+        "Name": "Rifat",
+        "Age": 22,
+        "City": "Dhaka",
+        "Language": "Java"
+    },
+    {
+        "Name": "Shakib",
+        "Age": 30,
+        "City": "Dhaka",
+        "Language": "C++"
+    },
+    {
+        "Name": "Sakib",
+        "Age": 28,
+        "City": "Dhaka",
+        "Language": "JavaScript"
+    },
+    {
+        "Name": "Nashit",
+        "Age": 26,
+        "City": "Dhaka",
+        "Language": "Ruby"
+    }
+]

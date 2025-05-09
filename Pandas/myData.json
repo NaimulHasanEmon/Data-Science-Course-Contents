@@ -1,0 +1,4 @@
+[
+    {"id": 1, "name": "Naimul", "address": {"city": "Dhaka", "zip-code": "1284"}},
+    {"id": 2, "name": "Emon", "address": {"city": "Bogura", "zip-code": "5801"}}
+]

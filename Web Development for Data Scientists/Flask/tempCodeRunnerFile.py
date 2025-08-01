@@ -1,10 +1,6 @@
 from flask import Flask, render_template
 
-app = Flask(
-    __name__,
-    static_folder="assets",
-    static_url_path="/files"
-    )
+app = Flask(__name__)
 
 @app.route("/")
 def hello_naimul():

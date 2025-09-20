@@ -25,16 +25,21 @@ for json_file in jsons:
         content = json.load(f)
     
     # List comprehension that will give a list of all the text and then I will pass this to create_embedding
+    
+    print(f"Creating embeddings for {json_file} file")
     embeddings = create_embedding([c["text"] for c in content["chunks"]])
 
     for i, chunk in enumerate(content["chunks"]):
         # print(chunk)
         chunk["embedding"] = embeddings[i]
         my_dict.append(chunk)
-    break
+    # break       # For single json file
 
 # print(my_dict)
 pprint.pprint(my_dict)  # pretty print full list
+
+df = pd.DataFrame.from_records(my_dict)
+print(df)
 
 # print(create_embedding(["Cat sat on the mat", "Emon dances on a mat"]))
 

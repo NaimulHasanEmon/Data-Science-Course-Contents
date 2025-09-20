@@ -15,7 +15,7 @@ for audio in audios:
     segment_arr = result["segments"]
     chunks = []
     for segment in segment_arr:
-        chunks.append({"id": segment["id"], "audio number": audio_number, "start": segment["start"], "end": segment["end"], "text": segment["text"]})
+        chunks.append({"id": segment["id"], "video number": audio_number, "start": segment["start"], "end": segment["end"], "text": segment["text"]})
     
     chunks_with_metadata = {"chunks": chunks, "text": result["text"]}
 

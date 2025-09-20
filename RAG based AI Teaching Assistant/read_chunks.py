@@ -17,7 +17,7 @@ def create_embedding(text_list):
     return embedding
 
 
-folder = r"C:\Data Science Course\RAG based AI Teaching Assistant\JSON's"
+folder = r"C:\Data Science Course/RAG based AI Teaching Assistant/JSON's"
 jsons = os.listdir(folder)      # List all the json's
 my_dict = []
 

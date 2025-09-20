@@ -1,8 +1,10 @@
 import requests
 import json
 import os
-import pprint
+# import pprint
 import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
 def create_embedding(text_list):
     r = requests.post("http://localhost:11434/api/embed", json={
@@ -33,14 +35,24 @@ for json_file in jsons:
         # print(chunk)
         chunk["embedding"] = embeddings[i]
         my_dict.append(chunk)
-    # break       # For single json file
+    break       # For single json file
 
 # print(my_dict)
-pprint.pprint(my_dict)  # pretty print full list
+# pprint.pprint(my_dict)  # pretty print full list
 
 df = pd.DataFrame.from_records(my_dict)
-print(df)
+# print(df)
 
-# print(create_embedding(["Cat sat on the mat", "Emon dances on a mat"]))
+incoming_query = input("Ask a Question: ")
+question_embedding = create_embedding([incoming_query])[0]
+# print(question_embedding)
 
-# pprint.pprint((create_embedding(["Cat sat on the mat", "Emon dances on a mat"])))  # pretty print full list
+# Find similarities of question_embedding with other embedding
+similarities = cosine_similarity(np.vstack(df["embedding"]), [question_embedding]).flatten()
+print(similarities)
+top_results = 3
+# [::-1] will reverse the array and [0:top_results] will pick first 3 which are max
+max_idx = similarities.argsort()[::-1][0:top_results]
+print(max_idx)
+new_df = df.loc[max_idx]
+print(new_df[["audio number", "id","text"]])

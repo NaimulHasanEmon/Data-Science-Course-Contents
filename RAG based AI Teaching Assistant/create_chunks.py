@@ -10,7 +10,7 @@ for audio in audios:
     print(audio)
     audio_number = audio.split(".")[0]
 
-    # result = model.transcribe(audio= f"C:\Data Science Course\RAG based AI Teaching Assistant\Audios\{audio}", language='bn', task="translate")
+    result = model.transcribe(audio= f"C:\Data Science Course\RAG based AI Teaching Assistant\Audios\{audio}", language='bn', task="translate")
 
     segment_arr = result["segments"]
     chunks = []

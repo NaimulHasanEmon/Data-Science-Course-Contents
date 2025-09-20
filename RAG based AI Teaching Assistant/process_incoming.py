@@ -11,9 +11,27 @@ def create_embedding(text_list):
         "model": "bge-m3",
         "input": text_list
     })
+    data = r.json()
 
-    embedding = r.json()["embeddings"]
-    return embedding
+    # handle both possible keys
+    if "embeddings" in data:
+        return data["embeddings"]
+    elif "embedding" in data:
+        return [data["embedding"]]
+    else:
+        raise ValueError(f"Unexpected response: {data}")
+
+def inference(prompt):
+    r = requests.post("http://localhost:11434/api/generate", json={
+        # "model": "deepseek-r1",
+        "model": "llama3.2",
+        "prompt": prompt, 
+        "stream": False
+    })
+    
+    response = r.json()
+    print(response)
+    return response
 
 incoming_query = input("Ask a Question: ")
 question_embedding = create_embedding([incoming_query])[0]
@@ -31,13 +49,19 @@ new_df = df.loc[max_idx]
 
 prompt = f'''I am teaching IELTS reading, writing, speaking and listening course. Here are video subtitle chunks containing audio number which is the exact serial of the video number, the starting time in seconds, the ending time in seconds as well and the text at that time:
 
-{new_df[["id","audio number","start","end","text"]].to_json()}
+{new_df[["id","audio number","start","end","text"]].to_json(orient="records")}
 ---------------------------------
 "{incoming_query}"
-User asked this question related to the video chunks, you have to answer where and how much content is taught in which video and at what timestamps and guide the user to go to that particular video. If user asks unrelated questions, tell him that you can only answer questions related to this course.
+User asked this question related to the video chunks, you have to answer in human way (don't mention the above format, it's just for you) where and how much content is taught in which video and at what timestamps and guide the user to go to that particular video. If user asks unrelated questions, tell him that you can only answer questions related to this course.
 '''
 
 with open("C:\Data Science Course\RAG based AI Teaching Assistant\Prompt\prompt.txt", "w") as f:
     f.write(prompt)
 # for idx, item in new_df.iterrows():
 #     print(idx, item["id"], item["audio number"], item["text"])
+
+response = inference(prompt)["response"]
+print(response)
+
+with open("C:\Data Science Course\RAG based AI Teaching Assistant\Response/response.txt", "w") as f:
+    f.write(response)
